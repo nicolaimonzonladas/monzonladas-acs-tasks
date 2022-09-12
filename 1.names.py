@@ -1,0 +1,5 @@
+print("Enter your first name:")
+firstName = input()
+print("Enter your second name:")
+secondName = input()
+print(firstName + " " + secondName)
