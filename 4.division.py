@@ -6,5 +6,11 @@ userInteger = int(input())
 print("Input your divisor:")
 userDivisor = int(input())
 
-print(userInteger/userDivisor)
+
+#Calculates the whole integer devision and the remainder.
+divisor, mod = divmod(userInteger, userDivisor)
+
+#Prints output
+print(divisor, " remainder ", mod)
+
 
