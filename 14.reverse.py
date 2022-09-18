@@ -10,4 +10,4 @@ for i in range(len(reverse)-1, -1, -1):
 # End for
 
 # Prints output
-print(reversed)
+print(reversed) 
