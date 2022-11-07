@@ -4,10 +4,8 @@ import pygame
 
 # -- Colours
 
-
-
 BLACK = (0,0,0)
-WHITE = (255,255,255)
+ORANGE = (255,150,0)
 BLUE = (50,50,255)
 # YELLOW = (y,y,0)
 
@@ -25,19 +23,18 @@ pygame.display.set_caption("My Window")
 done = False
 
 circX = 360
-circY = 240
+circY = 230
 
 y = 255
 
-sunset = False
+step = 2
+stepY = 2
 
 
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 
-
 ### -- Game Loop
-
 
 
 while not done:
@@ -56,38 +53,23 @@ while not done:
     # -- Draw here
     YELLOW = (y,y,0)
     pygame.draw.rect(screen, YELLOW, (0,0,500,500))
-    pygame.draw.circle(screen, WHITE, (circX,circY),20,0)
+    pygame.draw.circle(screen, ORANGE, (circX,circY),20,0)
     
+   
+    circX += step
+    if circX > 402 or circX < 80 :
+        step = -step 
+        
+    circY += stepY
+    if circY > 402 or circY < 80 :
+        stepY = -stepY
     
-    # if  circX == 674 or y <=6:
-    #     sunset = True
-    # if circX == 6 or y >=249:
-    #     sunset = False
-    
-    
-    if sunset == True:
-        circX += 2
-        if circX < 250:
-            circY += 2
-        else:
-            circY -= 2
+    if circY > 250:
+        if y > 5:
+            y -= 2
     else:
-        # SUNSET IS FALSE, THEREFORE SUNRISE RISING
-        circX -= 2
-        if circX < 250:
-            circY -= 2
-        else:
-            circY += 2
-    
-    if circY > 249:
-        sunset = True
-    else:
-        sunset = False
-    
-    
-    
-    
-    
+        if y < 250:
+            y -= 2
     
     # -- flip display to reveal new position of objects
     pygame.display.flip()
@@ -96,4 +78,9 @@ while not done:
     clock.tick(60)
     
     #End While - End of game loop
+    
+    if y > 250:
+        y = 250
+    elif y <5:
+        y =0
 pygame.quit()
