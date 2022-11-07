@@ -66,10 +66,10 @@ while not done:
     
     if circY > 250:
         if y > 5:
-            y -= 2
-    else:
+            y -= 5
+    elif circY < 250:
         if y < 250:
-            y -= 2
+            y += 5
     
     # -- flip display to reveal new position of objects
     pygame.display.flip()
@@ -81,6 +81,7 @@ while not done:
     
     if y > 250:
         y = 250
-    elif y <5:
-        y =0
+    elif y < 5:
+        y = 0
+    
 pygame.quit()
