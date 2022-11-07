@@ -4,7 +4,7 @@ import pygame
 
 # -- Colours
 
-y = 255
+
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
@@ -15,7 +15,7 @@ BLUE = (50,50,255)
 pygame.init()
 
 # -- Blank Screen
-size = (640,480)
+size = (500,500)
 screen = pygame.display.set_mode(size)
 
 # -- Title of new window/screen
@@ -24,10 +24,13 @@ pygame.display.set_caption("My Window")
 # -- Exit game flag set to false
 done = False
 
-circX = 40
-circY = 100
+circX = 360
+circY = 240
+
+y = 255
 
 sunset = False
+
 
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
@@ -52,33 +55,37 @@ while not done:
     
     # -- Draw here
     YELLOW = (y,y,0)
-    pygame.draw.rect(screen, YELLOW, (0,0,640,480))
-    pygame.draw.circle(screen, WHITE, (circX,circY),40,0)
+    pygame.draw.rect(screen, YELLOW, (0,0,500,500))
+    pygame.draw.circle(screen, WHITE, (circX,circY),20,0)
     
     
-
+    # if  circX == 674 or y <=6:
+    #     sunset = True
+    # if circX == 6 or y >=249:
+    #     sunset = False
+    
     
     if sunset == True:
-        circX += 5
-        circY += 5
-        y = y + 5
+        circX += 2
+        if circX < 250:
+            circY += 2
+        else:
+            circY -= 2
     else:
-        circX -= 5
-        circY -= 5
-        y = y - 5
+        # SUNSET IS FALSE, THEREFORE SUNRISE RISING
+        circX -= 2
+        if circX < 250:
+            circY -= 2
+        else:
+            circY += 2
     
-    circX += 5
-    
-    
-    if circX == 680 or y <=6:
+    if circY > 249:
         sunset = True
-        
+    else:
+        sunset = False
     
     
-    # if y <= 6:
-    #     y = 255
-        
-    # y = y - 5
+    
     
     
     
