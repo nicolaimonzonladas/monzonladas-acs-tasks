@@ -77,11 +77,11 @@ while not done:
     # - The clock ticks over
     clock.tick(60)
     
-    #End While - End of game loop
-    
     if y > 250:
         y = 250
     elif y < 5:
         y = 0
+    
+    #End While - End of game loop
     
 pygame.quit()
