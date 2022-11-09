@@ -13,7 +13,14 @@ yDir = 8
 screenW = 500
 screenH = 500
 
-randomColor = 255
+paddWidth = 15
+paddLength = 60
+
+p1PadX = 0
+p1PadY = 20
+
+p2PadX = 0
+p2PadY = 20
 
 # -- Colours
 BLACK = (0,0,0)
@@ -42,13 +49,21 @@ clock = pygame.time.Clock()
 
 ### -- Game Loop
 
-
 while not done:
     # -- User input and controls
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-        #End If
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                p1PadY = p1PadY - 20
+                print("test")
+            elif event.key == pygame.K_DOWN:
+                p1PadY = p1PadY + 20
+                print("test")
+            #End if
+
+        #End if
     #Next event
     
     # -- Game logic goes after this comment
@@ -73,10 +88,9 @@ while not done:
     screen.fill (BLACK)
     
     # -- Draw here
-    
-    RANDOMCOLOR = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
-    print()
-    pygame.draw.rect(screen, RANDOMCOLOR, (xVal,yVal,ballWidth,ballWidth))
+
+    pygame.draw.rect(screen, BLUE, (xVal,yVal,ballWidth,ballWidth))
+    pygame.draw.rect(screen, WHITE, (p1PadX,p1PadY,paddWidth,paddLength))
 
     # -- flip display to reveal new position of objects
     pygame.display.flip()
