@@ -123,12 +123,12 @@ while not done:
     if p2PadY < 0:
         p2PadY = 0
     else:
-        p2PadY  = ((yVal)- (paddLength/2)+(ballWidth/2)) 
+        p2PadY  = ((yVal)- (paddLength/2)+(ballWidth/2)) -(screenW - xVal)/10
         print((screenW - xVal)/10)
     if p2PadY >= screenH - paddLength:
         p2PadY = screenH - paddLength
     else:
-        p2PadY  = ((yVal)- (paddLength/2)+(ballWidth/2)) 
+        p2PadY  = ((yVal)- (paddLength/2)+(ballWidth/2)) -(screenW - xVal)/10
         print((screenW - xVal)/10)
     
     # Ignore: (1 + (xVal /100))/10 + (1-0.8684000000000001)
