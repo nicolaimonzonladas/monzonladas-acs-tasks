@@ -29,22 +29,15 @@ p1PadY = 20
 p2PadX = screenW -20
 p2PadY = 20
 
-
 # Score, fonts
 score = 0
 font = pygame.font.Font('freesansbold.ttf', 32)
-
 
 # Colours
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 BLUE = (50,50,255)
 YELLOW = (255,255,0)
-
-
-
-
-
 
 # Blank Screen
 size = (screenW,screenH)
@@ -139,7 +132,7 @@ while not done:
     screen.fill (BLACK)
     
     # Ball and paddles drawn here
-    pygame.draw.rect(screen, BLUE, (xVal,yVal,ballWidth,ballWidth))
+    pygame.draw.rect(screen, YELLOW, (xVal,yVal,ballWidth,ballWidth))
     pygame.draw.rect(screen, WHITE, (p1PadX,p1PadY,paddWidth,paddLength))
     pygame.draw.rect(screen, WHITE, (p2PadX,p2PadY,paddWidth,paddLength))
 
