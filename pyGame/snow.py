@@ -14,16 +14,22 @@ YELLOW = (255,255,0)
 pygame.init()
 
 # Blank Screen
-size = (640,480)
+size = (800,500)
 screen = pygame.display.set_mode(size)
 
 # Title of new window/screen
 pygame.display.set_caption("Snow")
 
+
+# "Pile up" effect for snow - FOR SOME REASON NOT WORKING.
+def pileUp(x):
+    pygame.draw.rect(screen, WHITE, (x,495,5,5))
+    # print("test")
+
 # Define the class snow which is a sprite
 class Snow(pygame.sprite.Sprite):
     # Define the constructor for snow
-    def __init__(self, color, width, height):
+    def __init__(self, color, width, height, speed):
         # Call the sprite contrsuctor
         super().__init__()
         # Create a sprite and fill it with colour
@@ -31,8 +37,19 @@ class Snow(pygame.sprite.Sprite):
         self.image.fill(color)
         # Set the position of the sprite
         self.rect = self.image.get_rect()
-        self.rect.x = random.randrange(0, 600)
-        self.rect.y = random.randrange(0,400)
+        self.rect.x = random.randrange(0, 800)
+        self.rect.y = random.randrange(0,500)
+        # Set speed of the sprite
+        self.speed = speed
+    # Class update function - runs for each pass through the game loop
+    def update(self):
+        self.rect.y = self.rect.y + self.speed
+        # Respawn code
+        if self.rect.y > 500:
+            pileUp(self.rect.x) # not working
+            # print("landed")
+            self.rect.y = -5
+        
 
 # Exit game flag set to false
 done = False
@@ -45,7 +62,7 @@ all_sprites_group = pygame.sprite.Group()
 # Create the snowflakes
 number_of_flakes = 50 
 for x in range(number_of_flakes):
-    my_snow = Snow(WHITE, 5, 5)
+    my_snow = Snow(WHITE, 5, 5, random.randrange(1,5))
     snow_group.add(my_snow)
     all_sprites_group.add(my_snow)
 
@@ -66,14 +83,13 @@ while not done:
     
     # Game logic goes after this comment
     
+    all_sprites_group.update()
     # Screen background is BLACK
     screen.fill(BLACK)
     
     # Draw here
     
     all_sprites_group.draw(screen)
-    # pygame.draw.rect(screen, BLUE, (220,165,200,150))
-    # pygame.draw.circle(screen, YELLOW, (40,100),40,0)
     
     # Flip display to reveal new position of objects
     pygame.display.flip()
