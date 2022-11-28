@@ -58,6 +58,7 @@ while not done:
     pygame.draw.circle(screen, WHITE, (circX,int(((3/1280)*(circX - 320)**2 ))),20,0)
     pygame.draw.circle(screen, GREEN, (320, 300), 100, 0)    
     pygame.draw.rect(screen, BLUE, (300, 180, 40, 40))
+    pygame.draw.polygon(screen, BLUE, ((285,180), (355,180), (320,160)))
    
     circX += 1
 
