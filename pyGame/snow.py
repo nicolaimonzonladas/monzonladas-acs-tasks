@@ -14,7 +14,7 @@ YELLOW = (255,255,0)
 pygame.init()
 
 # Blank Screen
-size = (800,500)
+size = (1000,800)
 screen = pygame.display.set_mode(size)
 
 # Title of new window/screen
@@ -37,18 +37,19 @@ class Snow(pygame.sprite.Sprite):
         self.image.fill(color)
         # Set the position of the sprite
         self.rect = self.image.get_rect()
-        self.rect.x = random.randrange(0, 800)
-        self.rect.y = random.randrange(0,500)
+        self.rect.x = random.randrange(0, 995)
+        self.rect.y = random.randrange(0,800)
         # Set speed of the sprite
         self.speed = speed
     # Class update function - runs for each pass through the game loop
     def update(self):
         self.rect.y = self.rect.y + self.speed
         # Respawn code
-        if self.rect.y > 500:
+        if self.rect.y > 800:
             pileUp(self.rect.x) # not working
             # print("landed")
             self.rect.y = -5
+            self.rect.x = random.randrange(0,995)
         
 
 # Exit game flag set to false
