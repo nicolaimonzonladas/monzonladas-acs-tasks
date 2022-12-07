@@ -33,6 +33,12 @@ class Invader(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(0, 1000)
         self.rect.y = random.randrange(-50,0)
+    def update(self):
+        self.rect.y = self.rect.y + 1
+        # Respawn code
+        if self.rect.y > 800:
+            self.rect.y = -5
+            self.rect.x = random.randrange(0,995)
 
 # Define the class Player which is a sprite
 class Player(pygame.sprite.Sprite):
@@ -97,6 +103,9 @@ while not done:
     # Next event
     
     # Game logic goes after this comment
+    
+    all_sprites_group.update()
+
     
     # Screen background is BLACK
     screen.fill(BLACK)
