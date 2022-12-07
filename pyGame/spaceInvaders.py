@@ -32,7 +32,7 @@ class Invader(pygame.sprite.Sprite):
         # Set the position of the sprite
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(0, 1000)
-        self.rect.y = random.randrange(-50,0)
+        self.rect.y = random.randrange(-50,50)
     def update(self):
         self.rect.y = self.rect.y + 1
         # Respawn code
@@ -43,7 +43,7 @@ class Invader(pygame.sprite.Sprite):
 # Define the class Player which is a sprite
 class Player(pygame.sprite.Sprite):
     # Define the constructor for Player
-    def __init__(self, color, width, height, speed):
+    def __init__(self, color, width, height):
         # Call the sprite constructor
         super().__init__()
         # Create a sprite and fill it with colour
@@ -52,17 +52,18 @@ class Player(pygame.sprite.Sprite):
         # Set the position of the sprite
         self.rect = self.image.get_rect()
         self.rect.x = 100
-        self.rect.y = 20
+        self.rect.y = 700
         # Set speed of the sprite
         self.speed = 0
     # Class update function - runs for each pass through the game loop
     def update(self):
-        self.rect.y = self.rect.y + self.speed
-        # Respawn code
-        if self.rect.y > 800:
-            # print("landed")
-            self.rect.y = -5
-            self.rect.x = random.randrange(0,995)
+        # self.rect.y = self.rect.y + self.speed
+        # # Respawn code
+        # if self.rect.y > 800:
+        #     # print("landed")
+        #     self.rect.y = -5
+        #     self.rect.x = random.randrange(0,995)
+        print("")
         
         
 
@@ -77,14 +78,14 @@ all_sprites_group = pygame.sprite.Group()
 
 
 # Create the Invaders
-number_of_flakes = 50 
+number_of_flakes = 10 
 for x in range(number_of_flakes):
-    my_Invader = Invader(WHITE, 5, 5)
+    my_Invader = Invader(WHITE, 15, 15)
     Invader_group.add(my_Invader)
     all_sprites_group.add(my_Invader)
     
 # Create the Player
-player = Player(YELLOW, 20, 20, 1)
+player = Player(YELLOW, 25, 25)
 all_sprites_group.add(player)
 
 # Manages how fast screen refreshes
@@ -99,8 +100,25 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-        # End If
-    # Next event
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                # p1PadY = p1PadY - 20
+                print("up")
+            elif event.key == pygame.K_RIGHT:
+                # p1PadY = p1PadY + 20
+                print("down")
+    # Code that somehow makes moving smooth
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        if player.rect.x < 0:
+            player.rect.x = 0
+        else:
+            player.rect.x = player.rect.x - 10
+    if keys[pygame.K_RIGHT]:
+        if player.rect.x >= 1000 - 25:
+            player.rect.x = 1000 - 25
+        else:
+            player.rect.x = player.rect.x + 10
     
     # Game logic goes after this comment
     
