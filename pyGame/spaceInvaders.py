@@ -9,6 +9,7 @@ BLACK = (0,0,0)
 WHITE = (255,255,255)
 BLUE = (50,50,255)
 YELLOW = (255,255,0)
+RED = (255,0,0)
 
 # Initialise PyGame
 pygame.init()
@@ -18,27 +19,9 @@ size = (1000,800)
 screen = pygame.display.set_mode(size)
 
 # Title of new window/screen
-pygame.display.set_caption("Invader")
+pygame.display.set_caption("Space Invaders")
 
-# Define the class Invader which is a sprite
-class Invader(pygame.sprite.Sprite):
-    # Define the constructor for Invader
-    def __init__(self, color, width, height):
-        # Call the sprite constructor
-        super().__init__()
-        # Create a sprite and fill it with colour
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
-        # Set the position of the sprite
-        self.rect = self.image.get_rect()
-        self.rect.x = random.randrange(0, 1000)
-        self.rect.y = random.randrange(-50,50)
-    def update(self):
-        self.rect.y = self.rect.y + 1
-        # Respawn code
-        if self.rect.y > 800:
-            self.rect.y = -5
-            self.rect.x = random.randrange(0,995)
+
 
 # Define the class Player which is a sprite
 class Player(pygame.sprite.Sprite):
@@ -55,18 +38,51 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = 700
         # Set speed of the sprite
         self.speed = 0
+    # Returns player x 
+    def get_x(self):
+        return self.rect.x
     # Class update function - runs for each pass through the game loop
     def update(self):
-        # self.rect.y = self.rect.y + self.speed
-        # # Respawn code
-        # if self.rect.y > 800:
-        #     # print("landed")
-        #     self.rect.y = -5
-        #     self.rect.x = random.randrange(0,995)
         print("")
-        
-        
 
+# Define the class Invader which is a sprite
+class Invader(pygame.sprite.Sprite):
+    # Define the constructor for Invader
+    def __init__(self, color, width, height):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([width, height])
+        self.image.fill(color)
+        # Set the position of the sprite
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randrange(0, 1000)
+        self.rect.y = random.randrange(-150,50)
+    def update(self):
+        self.rect.y = self.rect.y + 2
+        # Respawn code
+        if self.rect.y > 800:
+            self.rect.y = -5
+            self.rect.x = random.randrange(0,995)
+
+# Define the class Bullet which is a sprite like Invader, but spawned in differently
+class Bullet(pygame.sprite.Sprite):
+    # Define the constructor for Invader
+    def __init__(self, color, width, height):
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        self.image = pygame.Surface([width, height])
+        self.image.fill(color)
+        # Set the position of the sprite
+        self.rect = self.image.get_rect()
+        self.rect.x = player.get_x() + 10
+        self.rect.y = 700
+    def update(self):
+        # Move bullet up 
+        self.rect.y = self.rect.y - 3
+        pygame.sprite.groupcollide(bullet_list, Invader_group, True, True)
+        
 
 # Exit game flag set to false
 done = False
@@ -75,12 +91,14 @@ done = False
 Invader_group = pygame.sprite.Group()
 # Create a list of all sprites
 all_sprites_group = pygame.sprite.Group()
+# Create a list of all bullets
+bullet_list = pygame.sprite.Group()
 
 
 # Create the Invaders
-number_of_flakes = 10 
-for x in range(number_of_flakes):
-    my_Invader = Invader(WHITE, 15, 15)
+number_of_enemies = 30
+for x in range(number_of_enemies):
+    my_Invader = Invader(WHITE, 25, 5)
     Invader_group.add(my_Invader)
     all_sprites_group.add(my_Invader)
     
@@ -88,6 +106,14 @@ for x in range(number_of_flakes):
 player = Player(YELLOW, 25, 25)
 all_sprites_group.add(player)
 
+# Procedure to fire bullet
+def fire():
+    print("shot")
+    mybullet = Bullet(RED, 3, 7)
+    all_sprites_group.add(mybullet)
+    bullet_list.add(mybullet)
+    # bullet_count = bullet_count - 1
+    
 # Manages how fast screen refreshes
 clock = pygame.time.Clock()
 
@@ -103,23 +129,27 @@ while not done:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 # p1PadY = p1PadY - 20
-                print("up")
+                print("left")
             elif event.key == pygame.K_RIGHT:
                 # p1PadY = p1PadY + 20
-                print("down")
+                print("right")
+            elif event.key == pygame.K_SPACE:
+                # p1PadY = p1PadY + 20
+                print("up")
+                fire()
     # Code that somehow makes moving smooth
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         if player.rect.x < 0:
             player.rect.x = 0
         else:
-            player.rect.x = player.rect.x - 10
+            player.rect.x = player.rect.x - 15
     if keys[pygame.K_RIGHT]:
         if player.rect.x >= 1000 - 25:
             player.rect.x = 1000 - 25
         else:
-            player.rect.x = player.rect.x + 10
-    
+            player.rect.x = player.rect.x + 15
+
     # Game logic goes after this comment
     
     all_sprites_group.update()
