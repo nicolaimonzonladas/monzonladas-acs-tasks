@@ -16,7 +16,7 @@ size = (1000,800)
 screen = pygame.display.set_mode(size)
 
 # Title of new window/screen
-pygame.display.set_caption("My Window")
+pygame.display.set_caption("Snakes & Ladders")
 
 # Exit game flag set to false
 done = False
