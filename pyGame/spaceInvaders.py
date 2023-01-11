@@ -19,7 +19,7 @@ size = (1000,800)
 screen = pygame.display.set_mode(size)
 
 # Title of new window/screen
-pygame.display.set_caption("Space Invaders")
+pygame.display.set_caption("Space Bar to Shoot")
 
 
 
