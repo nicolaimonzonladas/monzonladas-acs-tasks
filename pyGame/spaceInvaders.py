@@ -14,6 +14,10 @@ RED = (255,0,0)
 # Initialise PyGame
 pygame.init()
 
+# Font***
+
+font = pygame.font.Font('freesansbold.ttf', 32)
+
 # Blank Screen
 size = (1000,800)
 screen = pygame.display.set_mode(size)
@@ -26,12 +30,13 @@ pygame.display.set_caption("Space Bar to Shoot")
 # Define the class Player which is a sprite
 class Player(pygame.sprite.Sprite):
     # Define the constructor for Player
-    def __init__(self, color, width, height):
+    def __init__(self, color, width, height, score):
         # Call the sprite constructor
         super().__init__()
         # Create a sprite and fill it with colour
         self.image = pygame.Surface([width, height])
         self.image.fill(color)
+        self.score = 20
         # Set the position of the sprite
         self.rect = self.image.get_rect()
         self.rect.x = 100
@@ -44,6 +49,12 @@ class Player(pygame.sprite.Sprite):
     # Class update function - runs for each pass through the game loop
     def update(self):
         print("")
+    # Score functions
+    def hitTarget(self):
+        self.score = self.score + 1
+    def missTarget(self):
+        self.score = self.score - 1
+        
 
 # Define the class Invader which is a sprite
 class Invader(pygame.sprite.Sprite):
@@ -64,6 +75,7 @@ class Invader(pygame.sprite.Sprite):
         if self.rect.y > 800:
             self.rect.y = -5
             self.rect.x = random.randrange(0,995)
+            player.missTarget()
 
 # Define the class Bullet which is a sprite like Invader, but spawned in differently
 class Bullet(pygame.sprite.Sprite):
@@ -80,8 +92,10 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.y = 700
     def update(self):
         # Move bullet up 
-        self.rect.y = self.rect.y - 3
-        pygame.sprite.groupcollide(bullet_list, Invader_group, True, True)
+        self.rect.y = self.rect.y - 4
+        if pygame.sprite.groupcollide(bullet_list, Invader_group, True, True, collided = None):
+            player.hitTarget()
+            print("******")
         
 
 # Exit game flag set to false
@@ -103,13 +117,13 @@ for x in range(number_of_enemies):
     all_sprites_group.add(my_Invader)
     
 # Create the Player
-player = Player(YELLOW, 25, 25)
+player = Player(YELLOW, 25, 25, 20)
 all_sprites_group.add(player)
 
 # Procedure to fire bullet
 def fire():
     print("shot")
-    mybullet = Bullet(RED, 3, 7)
+    mybullet = Bullet(RED, 5, 12)
     all_sprites_group.add(mybullet)
     bullet_list.add(mybullet)
     # bullet_count = bullet_count - 1
@@ -163,6 +177,11 @@ while not done:
     all_sprites_group.draw(screen)
     # pygame.draw.rect(screen, BLUE, (220,165,200,150))
     # pygame.draw.circle(screen, YELLOW, (40,100),40,0)
+    
+    # Score
+    
+    score1 = font.render("Score : " + str(player.score), True, (255, 255, 255))
+    screen.blit(score1, (100, 50))
     
     # Flip display to reveal new position of objects
     pygame.display.flip()
