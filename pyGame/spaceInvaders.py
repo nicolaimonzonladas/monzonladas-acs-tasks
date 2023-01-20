@@ -183,6 +183,15 @@ while not done:
     score1 = font.render("Score : " + str(player.score), True, (255, 255, 255))
     screen.blit(score1, (100, 50))
     
+    msg1 = font.render("Press space to fire, arrow keys to move", True, (255, 255, 0))
+    screen.blit(msg1, (100, 120))
+    
+    msg2 = font.render("When you hit a target, score += 1", True, (255, 0, 0))
+    screen.blit(msg2, (100, 170))
+    
+    msg3 = font.render("When you mis a target, score -= 1", True, (255, 0, 0))
+    screen.blit(msg3, (100, 220))
+    
     # Flip display to reveal new position of objects
     pygame.display.flip()
     
