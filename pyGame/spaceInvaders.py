@@ -189,7 +189,7 @@ while not done:
     msg2 = font.render("When you hit a target, score += 1", True, (255, 0, 0))
     screen.blit(msg2, (100, 170))
     
-    msg3 = font.render("When you mis a target, score -= 1", True, (255, 0, 0))
+    msg3 = font.render("When you miss a target, score -= 1", True, (255, 0, 0))
     screen.blit(msg3, (100, 220))
     
     # Flip display to reveal new position of objects
