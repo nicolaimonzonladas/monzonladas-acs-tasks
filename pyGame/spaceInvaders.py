@@ -16,7 +16,7 @@ pygame.init()
 
 # Font***
 
-font = pygame.font.Font('freesansbold.ttf', 32)
+font = pygame.font.Font('freesansbold.ttf', 28)
 
 # Blank Screen
 size = (1000,800)
